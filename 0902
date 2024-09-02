@@ -1,6 +1,5 @@
 파일이 존재하지 않을 때, 파일을 만들어서 쓰는 방법
 
-```
 #include<stdio.h>
 int main(void)
 {
@@ -9,13 +8,11 @@ int main(void)
 	fclose(pFile);
 	return 0;
 }
-```C
 
-__________________________________________
+***
 
 2. 파일이 존재할 때, 다시 w모드로 했을 때
 
-```
 #include<stdio.h>
 int main(void)
 {
@@ -24,12 +21,11 @@ int main(void)
 	fclose(pFile);
 	retrun 0;
 }
-```C
-__________________________________________
+
+***
 
 3. 이미 파일은 존재하고 그 파일을 열어서 read 모드로 사용하는 방법
 
-```
 #include<stdio.h>
 int main(void)
 {
@@ -47,12 +43,11 @@ int main(void)
 	printf("%s\n", str);
 	return 0;
 }
-```C
-__________________________________________
+
+***
 
 4. 이미 파일은 존재하고 그 파일의 끝에서 부터 편집하는 방법
 
-```
 #include<stdio.h>
 int main(void)
 {
@@ -61,5 +56,6 @@ int main(void)
 	fclose(pFile);
 	return 0;
 }
-```C
-__________________________________________
+
+***
+
