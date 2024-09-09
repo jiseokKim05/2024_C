@@ -1,0 +1,102 @@
+데이터 개수 구하기
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main(void) {
+    double X[100] = { 0.0 };
+    double Y[100] = { 0.0 };
+    double Angle[100] = { 0.0 };
+    int result;
+    int num = 0; // num을 0으로 초기화
+
+    FILE* fp;  // 파일 관리를 위한 파일 포인터
+
+    // 파일을 읽기 모드로 열기
+    fp = fopen("waypoint.txt", "r");
+    if (fp == NULL) {
+        // 파일을 열지 못한 경우
+        printf("파일이 존재하지 않습니다.\n\n");
+        return -1; // 오류 코드를 반환하고 프로그램 종료
+    }
+    else {
+        // EOF (파일 끝)까지 실수를 읽어오는 반복문
+        do {
+            result = fscanf(fp, "%lf %lf %lf", &X[num], &Y[num], &Angle[num]); // %lf 사용
+            if (result == 3) {  // 3개의 값을 성공적으로 읽었을 때만 num 증가
+                num++;
+            }
+        } while (result != EOF);
+
+        printf("파일에 존재 하는 데이터의 개수는 : %d\n", num);
+    }
+
+    fclose(fp);  // 열었던 파일을 닫음
+    return 0;
+}
+
+상대좌표 저장하기
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <math.h>
+
+int main(void) {
+    double X[100] = { 0.0 };
+    double X_ref[100] = { 0.0 };
+    double Y[100] = { 0.0 };
+    double Y_ref[100] = { 0.0 };
+    double Angle[100] = { 0.0 };
+    double Dist[100] = { 0.0 };
+    int result;
+    int num = 0;  // num을 0으로 초기화
+
+    FILE* fp;  // 파일 관리를 위한 파일 포인터
+
+    // 파일을 읽기 모드로 열기
+    fp = fopen("waypoint.txt", "r");
+    if (fp == NULL) {
+        // 파일을 열지 못한 경우
+        printf("파일이 존재하지 않습니다.\n\n");
+        return -1;  // 오류 코드를 반환하고 프로그램 종료
+    }
+    else {
+        // EOF (파일 끝)까지 실수를 읽어오는 반복문
+        do {
+            result = fscanf(fp, "%lf %lf %lf", &X[num], &Y[num], &Angle[num]);  // %lf 사용
+            if (result != EOF) {  // 3개의 값을 성공적으로 읽었을 때만 num 증가
+                num++;
+            }
+        } while (result != EOF);
+
+        // 상대 좌표 계산 및 거리 계산
+        for (int i = 1; i < num; i++) {
+            X_ref[i] = X[i] - X[0];  // 첫 번째 좌표와의 상대 좌표 계산
+            Y_ref[i] = Y[i] - Y[0];  // 첫 번째 좌표와의 상대 좌표 계산
+            Dist[i] = sqrt((X[i] - X[i - 1]) * (X[i] - X[i - 1]) + (Y[i] - Y[i - 1]) * (Y[i] - Y[i - 1]));  // 거리 계산
+        }
+
+        printf("파일에 존재하는 데이터의 개수는 : %d\n\n", num);
+
+        // 값 출력
+        for (int i = 1; i < num; i++) {
+            printf("X[%d]: %.2lf\tX_ref[%d]: %.2lf\n", i, X[i], i, X_ref[i]);
+            printf("Y[%d]: %.2lf\tY_ref[%d]: %.2lf\n", i, Y[i], i, Y_ref[i]);
+            printf("Angle[%d] : %.2lf\n", i, Angle[i]);
+            printf("Dist[%d]: %.2lf\n\n", i, Dist[i]);
+        }
+
+        // 거리 정보를 별도의 파일로 저장
+        FILE* fp_out = fopen("distances.txt", "w");
+        if (fp_out != NULL) {
+            for (int i = 1; i < num; i++) {
+                fprintf(fp_out, "Dist[%d]: %.2lf\n", i, Dist[i]);
+            }
+            fclose(fp_out);
+        }
+        else {
+            printf("거리 정보를 저장할 파일을 열 수 없습니다.\n");
+        }
+    }
+
+    fclose(fp);  // 열었던 파일을 닫음
+    return 0;
+}
