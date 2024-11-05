@@ -1,0 +1,169 @@
+# 포인터 예제1
+
+```c
+#include <stdio.h>
+
+int main(void) 
+{
+	int i = 3000;
+	int* p = NULL; 
+	
+	p = &i;
+	printf("i=%d\n", i); 
+	printf("&i=%u\n\n", &i);
+	printf("p=%u\n", p); 
+	printf("*p=%d\n\n", *p); 
+	return 0;
+}
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/1120e6b5-78fb-48c4-b147-c23ea6920d2e/image.png)
+
+# 포인터 예제2
+
+```c
+#include <stdio.h>
+
+int main(void) 
+{
+	int x = 10; 
+	int y = 20;
+	int* p; 
+	
+	p = &x;
+	printf("p=%d\n", p); 
+	printf("*p=%d\n\n", *p); 
+	
+	p = &y; 
+	printf("p=%d\n", p);
+	printf("*p=%d\n\n", *p);
+	
+	return 0;
+}
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/d0a1110d-57cb-4ae7-9755-85cede3aa2c9/image.png)
+
+# 포인터 예제3
+
+```c
+#include <stdio.h>
+
+int main(void) 
+{
+	int i = 10;
+	int* p; 
+	
+	p = &i; 
+	printf("i=%d\n", i); 
+
+	*p = 20; 
+	printf("i=%d\n", i);
+	
+	return 0;
+}
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/98a98794-7276-4ac3-822b-62e44a51c9a4/image.png)
+
+# **int형 변수를 선언하여 사용자에게 입력받은 후 해당 값을 2배로 바꿔주는 함수(반환 형태 : void)를 사용하여 입력받은 수의 3배를 출력하시오**
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+void ChangeDouble(int* p) 
+{ 
+    *p = *p * 2; 
+}
+
+int main()
+{
+    int num;
+    
+    printf("숫자를 입력하시오 : ");
+    scanf_s("%d", &num);
+    ChangeDouble(&num);
+    printf("%d\n", num);
+    return 0;
+}
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/d141d61e-d386-46d1-a917-4bd80b186733/image.png)
+
+# **숫자를 입력 받아 해당 숫자를 가리키는 포인터를 만들어 해당 숫자의 값과 포인터의 값을 출력하고, 두 주소도 출력하여 같은 값이 나오는지 확인해보세요.**
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main()
+{
+    int num;
+    int* numP = &num;
+    
+    printf("숫자를 입력하시오 : ");
+    scanf_s("%d", &num); 
+    printf("num : %d\n*numP : %d\n\n", num, *numP); 
+    printf("&num : %d\nnumP : %d\n\n", &num, numP); 
+}
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/3990416f-dff0-4118-bed9-db3c12aae3ef/image.png)
+
+# **숫자를 입력 받아 해당 숫자를 제곱으로 바꿔주는 함수를 만드세요. (반환 형태가 void이고, 포인터 사용)**
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+void ChangeDouble(int* p) 
+{
+    *p = *p * *p;
+}
+
+int main()
+{
+    int num;
+    
+    printf("숫자를 입력하시오 : ");
+    scanf("%d", &num);
+    ChangeDouble(&num);
+    printf("제곱 : %d\n", num);
+    return 0;
+}
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/234f9167-3248-42c9-a2ee-65536c16c64b/image.png)
+
+# **숫자1, 숫자2 두 개의 숫자를 입력 받아 포인터 두 개의 인자를 받는 함수로 두 숫자를 바꾼 후 출력해주는 프로그램을 만드세요.(숫자1을 출력하면 숫자2의 숫자가 나오고, 숫자2를 출력하면 숫자1이 나오게 하세요. 함수에서 두 값을 서로 바꿈)**
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+
+void ChangeNumbers(int* p1, int* p2) 
+{
+	int temp = *p1;  
+	*p1 = *p2;
+	*p2 = temp;
+}
+
+int main(void) 
+{
+	int num1;
+	int num2;
+	
+	printf("숫자1 : ");
+	scanf("%d", &num1);
+	
+	printf("숫자2 : ");
+	scanf("%d", &num2);
+	
+	printf("바꾸기 전..\n 숫자1 : %d, 숫자2 : %d\n", num1, num2);
+	ChangeNumbers(&num1, &num2);
+	printf("바꾼 후..\n 숫자1 : %d, 숫자2 : %d\n", num1, num2);
+	
+	return 0;
+}
+```
