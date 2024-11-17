@@ -1,0 +1,142 @@
+#include <stdio.h>
+
+// 구조체 선언
+struct student {
+// 구조체 멤버 정의
+	int number;
+	char name[10];
+	double grade;
+};
+
+int main(void) 
+{
+	struct student s1 = {20210000, "Jo", 4.5} 
+	// 구조체 멤버 변수 선언 및 초기화
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+// 구조체 멤버 정의
+	int number;
+	char name[10];
+	double grade;
+}s1;
+
+int main(void)
+{
+	s1.number = 2021000;
+	strcpy_s(s1.name, 10, "Jo"); 
+	// 맴버가 문자열일 경우엔 strcpy_s()를 사용해 문자열을 저장해준다.
+	s1.grade = 4.5;
+	
+	return 0;
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+// 구조체 멤버 정의
+	int number;
+	char name[10];
+	double grade;
+}s1;
+
+int main(void)
+{
+	printf("학번 : ");
+	scanf_s("%d", &s1.number);
+	
+	printf("이름 : ");
+	scanf_s("%s", &s1.name, 10);
+	
+	printf("학점 : ");
+	scanf_s("%lf", &s1.grade);
+	
+	printf("학번 : %d\n 이름 : %s\n 학점 : %lf\n\n", s1.number, s1.name, s1.grade);
+	
+return 0;
+
+}
+
+#include <stdio.h>
+
+struct point
+{
+	int x,y;
+}
+
+int main(void) 
+{
+	struct point p1 = {10, 20};
+	struct point p2 = {10, 10};
+	struct point p3 = p1;
+	
+	printf("p3의 좌표 : %d %d\n", p3.x, p3.y);
+	
+	if (p1.x == p2.x && p1.y == p2.y)
+		printf("p1 과 p2 좌표는 같습니다\n");
+	else
+		printf("p1과 p2의 좌표는 다릅니다\n");
+	return 0;
+}
+
+#include <stdio.h>
+
+struct point {
+	int x, y;
+};
+struct rect {
+	struct point p1, p2;
+};
+int main(void) {
+	struct rect r;
+	int width, height, area, peri;
+	
+	printf("왼쪽 상단 표 : ");
+	scanf_s("%d %d", &r.p1.x, &r.p1.y);
+	
+	printf("오른쪽 하단 표 : ");
+	scanf_s("%d %d", &r.p2.x, &r.p2.y);
+	
+	width = r.p2.x - r.p1.x;
+	height = r.p1.y - r.p2.y;
+	area = width * height;
+	peri = 2 * (width + height);
+	
+	printf("면적 : %d\n 둘레 : %d\n:, area, peri);
+	
+	return 0;
+	}
+
+ #include <stdio.h>
+
+struct student {
+	int number;
+	char name[10];
+	double grade;
+};
+
+int main(void)
+{
+	struct student list[3];
+	
+	for (int i = 0; i < 3; i++) 
+	{
+		printf("학번: ");
+		scanf_s("%d", &list[i].number);
+		printf("이름 : ");
+		scanf_s("%s", list[i].name, 10);
+		printf("학점 : ");
+		scanf_s("%lf", &list[i],grade);
+	}
+	
+	for (int i = 0; i < 3; i++) 
+	{
+		printf("\n이름 : %s, 학점 : %f \n", list[i].name, list[i].grade);
+	}
+
+	return 0;
+}
