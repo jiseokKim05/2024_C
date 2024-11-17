@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int *data;
+
+int no_data = -1;
+
+double *read_data_file(const std::string& file_path) {
+    FILE *fp;
+    double *data_array;
+
+    printf("waypoint file: %s\n", file_path.c_str());
+
+    fp = fopen(file_path.c_str(), "r");
+
+    if (fp == NULL) {
+        printf("File does not exist!");
+        exit(1); // 종료
+    } else {
+        no_data = 0;
+
+        do {
+            double temp;
+            int result = fscanf(fp, "%lf", &temp); // %d 대신 %lf로 수정
+            if (result != EOF) {
+                no_data++;
+            }
+        } while (result != EOF);
+
+        fclose(fp);
+
+        // DATA의 갯수가 나오므로 동적 할당을 수행함
+        // 파일을 다시 열어서 읽어야 함
+        fp = fopen(file_path.c_str(), "r");
+
+        data_array = (double *)calloc(no_data, sizeof(double));
+
+        for (int i = 0; i < no_data; i++) {
+            fscanf(fp, "%lf", &data_array[i]);
+        }
+
+        fclose(fp);
+        return data_array;
+    }
+}
+
+void swap(int *cc, int *dd)
+{
+	int temp;
+	
+	temp = *cc;
+	*cc = *dd;
+	*dd = temp;
+}
+
+void sort(int *arr[], int size)
+{
+	int i, j;
+	
+	for(i = 0; i < size - 1; i++) {
+		for(j = 0; j < size - 1 - i; i++) {
+			if ( arr[j] > arr[j+1] ) {
+				swap(arr[j], arr[j+1]);
+			}
+		}
+	}
+}
+
+void print_data()
+{
+	if (data == NULL || no_data <= 0) 
+	{
+		printf("출력할 데이터가 없습니다.\n");
+		return;
+	}
+	
+	printf("데이터 출력 : ");
+	for(int i = 0; i < no_data; i++)
+	{
+		printf("%d", data[i]);
+	}
+	printf("\n");
+}
+
+int main()
+{
+	const char* file_path = "data.txt";
+	read_data_file(file_path);
+	sort(data, no_data);
+	print_data();
+	
+	if (data != NULL)
+	{
+		free(data);
+	}
+	
+	return 0;
+}
