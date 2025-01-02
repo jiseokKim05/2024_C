@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <wiringPi.h>
+
+#define LED 20
+
+void main(void)
+{
+	printf("Respberry Pi3 - LED Blink\n");
+	
+	wiringPiSetupGpio();
+	pinMode(LED, OUTPUT);
+	
+	for(;;)
+	{
+		digitalWrite(LED, 0);
+		delay(200);
+		digitalWrite(LED, 1);
+		delay(200);
+	}
+}
